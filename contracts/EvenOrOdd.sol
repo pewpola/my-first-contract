@@ -5,7 +5,7 @@ pragma solidity ^0.8.12;
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract OddOrEven {
-    string public choice = ""; //EVEN OR ODD
+    string public choicePlayer1 = ""; //EVEN OR ODD
 
     function compare(string memory str1, string memory str2) private pure returns(bool) {
         bytes memory arrA = bytes(str1);
@@ -15,7 +15,11 @@ contract OddOrEven {
 
     function choose(string memory newChoice) public {
         require(compare(newChoice, "EVEN") || compare(newChoice, "ODD"), "Choose EVEN OR ODD");
-        choice = newChoice;
+
+        string memory message = string.concat("Player 1 already choose ", choicePlayer1);
+        require(compare(choicePlayer1, ""));
+
+        choicePlayer1 = newChoice;
     }
 
     function ramdom() private view returns(uint256) {
