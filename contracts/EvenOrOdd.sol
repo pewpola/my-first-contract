@@ -22,27 +22,34 @@ contract OddOrEven {
         require(compare(choicePlayer1, ""));
 
         choicePlayer1 = newChoice;
+        player1 = msg.sender;
     }
-
+    
+    /*
     function ramdom() private view returns(uint256) {
         return uint(keccak256(abi.encodePacked(block.timestamp, choice)));
     }
+    */
 
     function play(uint8 number) public {
         require(!compare(choicePlayer1, ""), "Choose your option first. EVEN or ODD");
 
-        uint256 cpuNumber = ramdom();
-        bool isEven = (number + cpuNumber) % 2 == 0;
-        string memory message = string.concat("Player choose ", choice , 
-        " and plays ", Strings.toString(number), 
-        ". CPU plays ", Strings.toString(cpuNumber));
-
-        if(isEven && compare(choicePlayer1, "EVEN")) {
-            return string.concat(message, ". Player won.");
-        } else if(!isEven && compare(choicePlayer1, "ODD")) {
-            return string.concat(message, ". Player won.");
+        if(msg.sender) {
+            numberPlayer1 = number;
         } else {
-            return string.concat(message, ". Player won.");
+            uint256 cpuNumber = ramdom();
+            bool isEven = (number + cpuNumber) % 2 == 0;
+            string memory message = string.concat("Player choose ", choice , 
+            " and plays ", Strings.toString(number), 
+            ". CPU plays ", Strings.toString(cpuNumber));
+
+            if(isEven && compare(choicePlayer1, "EVEN")) {
+                return string.concat(message, ". Player won.");
+            } else if(!isEven && compare(choicePlayer1, "ODD")) {
+                return string.concat(message, ". Player won.");
+            } else {
+                return string.concat(message, ". Player won.");
+            }
         }
     }
 }
