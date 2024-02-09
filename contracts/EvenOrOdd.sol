@@ -26,8 +26,7 @@ contract OddOrEven {
         return uint(keccak256(abi.encodePacked(block.timestamp, choice)));
     }
 
-    function play(uint8 number) public view returns(string memory) {
-        require(number >= 0 && number <= 2 , "Play, 0, 1 or 2");
+    function play(uint8 number) public {
         require(!compare(choicePlayer1, ""), "Choose your option first. EVEN or ODD");
 
         uint256 cpuNumber = ramdom();
