@@ -28,7 +28,7 @@ contract OddOrEven {
 
     function play(uint8 number) public view returns(string memory) {
         require(number >= 0 && number <= 2 , "Play, 0, 1 or 2");
-        require(!compare(choice, ""), "Choose your option first. EVEN or ODD");
+        require(!compare(choicePlayer1, ""), "Choose your option first. EVEN or ODD");
 
         uint256 cpuNumber = ramdom();
         bool isEven = (number + cpuNumber) % 2 == 0;
@@ -36,9 +36,9 @@ contract OddOrEven {
         " and plays ", Strings.toString(number), 
         ". CPU plays ", Strings.toString(cpuNumber));
 
-        if(isEven && compare(choice, "EVEN")) {
+        if(isEven && compare(choicePlayer1, "EVEN")) {
             return string.concat(message, ". Player won.");
-        } else if(!isEven && compare(choice, "ODD")) {
+        } else if(!isEven && compare(choicePlayer1, "ODD")) {
             return string.concat(message, ". Player won.");
         } else {
             return string.concat(message, ". Player won.");
