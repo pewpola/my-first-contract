@@ -8,6 +8,7 @@ contract OddOrEven {
     string public choicePlayer1 = ""; //EVEN OR ODD
     address public player1;
     uint8 private numberPlayer1;
+    string public status = "";
 
     function compare(string memory str1, string memory str2) private pure returns(bool) {
         bytes memory arrA = bytes(str1);
@@ -23,8 +24,9 @@ contract OddOrEven {
 
         choicePlayer1 = newChoice;
         player1 = msg.sender;
+        status = string.concat("Player 1 is ", player1, " and choose ", choicePlayer1);
     }
-    
+
     /*
     function ramdom() private view returns(uint256) {
         return uint(keccak256(abi.encodePacked(block.timestamp, choice)));
@@ -36,6 +38,7 @@ contract OddOrEven {
 
         if(msg.sender) {
             numberPlayer1 = number;
+            status = "Player 1 already played. Waiting player 2.";
         } else {
             uint256 cpuNumber = ramdom();
             bool isEven = (number + cpuNumber) % 2 == 0;
