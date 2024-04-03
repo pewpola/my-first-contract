@@ -14,6 +14,12 @@ contract JokenPo {
     address private player1;
     string public result = "";
 
+    function update(string memory newResult) private {
+        result = newResult;
+        player1 = address(0);
+        choice1 = Options.NONE;
+    }
+
     function play(Options newChoice) public {
         require(newChoice != Options.NONE, "Invalid choice");
         require(player1 != msg.sender, "Wait the another player.");
