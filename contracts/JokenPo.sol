@@ -15,10 +15,21 @@ contract JokenPo {
     address private player1;
     string public result = "";
 
+    address private immutable owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
     function update(string memory newResult) private {
         result = newResult;
         player1 = address(0);
         choice1 = Options.NONE;
+    }
+
+    function secretFunction() public view returns(string memory) {
+        require(owner == msg.sender, "You don't have permissions to do this.");
+        return "passing";
     }
 
     function play(Options newChoice) public {
