@@ -32,10 +32,11 @@ contract JokenPo {
         return "passing";
     }
 
-    function play(Options newChoice) public {
+    function play(Options newChoice) public payable {
         require(newChoice != Options.NONE, "Invalid choice");
         require(player1 != msg.sender, "Wait the another player.");
-
+        require(msg.value >= 0.01 gwei, "Invalid bid.");
+        
         if (choice1 == Options.NONE) {
             player1 = msg.sender;
             choice1 = newChoice;
