@@ -27,6 +27,11 @@ contract JokenPo {
         choice1 = Options.NONE;
     }
 
+    function getBalance() public view returns(uint) {
+        require(owner == msg.sender, "You don't have this permission");
+        return address(this).balance;
+    }
+
     function secretFunction() public view returns(string memory) {
         require(owner == msg.sender, "You don't have permissions to do this.");
         return "passing";
@@ -36,7 +41,7 @@ contract JokenPo {
         require(newChoice != Options.NONE, "Invalid choice");
         require(player1 != msg.sender, "Wait the another player.");
         require(msg.value >= 0.01 gwei, "Invalid bid.");
-        
+
         if (choice1 == Options.NONE) {
             player1 = msg.sender;
             choice1 = newChoice;
