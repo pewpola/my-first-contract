@@ -22,6 +22,8 @@ contract JokenPo {
     }
 
     function finishGame(string memory newResult) private {
+        address contractAddress = address(this);
+        owner.transfer((contractAddress.balance / 100) * 10);
         result = newResult;
         player1 = address(0);
         choice1 = Options.NONE;
