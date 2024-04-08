@@ -87,4 +87,27 @@ contract JokenPo {
             choice1 = Options.NONE;
         }
     }
+
+    function getLeaderboard() public view returns(Player[] memory) {
+        if (players.length < 2) {
+            return players;
+        }
+
+        Player[] memory arr = new Player[](players.length);
+
+        for (uint i = 0; i < players.length; i++) {
+            arr[i] = players[i];    
+        }
+
+        for (uint i = 0; i < arr.length - 1; i++) {
+            for (uint j = 1; j < arr.length; j++){
+                if (arr[i].wins < arr[j].wins) {
+                    Player memory change = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = change;
+                }
+            }
+        }
+        return arr;
+    }
 }
