@@ -28,13 +28,13 @@ contract JokenPo {
         owner = payable(msg.sender);
     }
 
-    function contains(address winner) private view returns(bool){
+    function updateWinner(address winner) private {
         for (uint i = 0; i < players.length; i++) {
             if (players[i].wallet == winner) {
-                return true;
+                players[i].wins++;
             }
         }
-        return false;
+        players.push(Player(winner, 1));
     }
 
     function finishGame(string memory newResult, address winner) private {
@@ -43,9 +43,7 @@ contract JokenPo {
         payable(winner).transfer((contractAddress.balance / 100) * 90);
         owner.transfer(contractAddress.balance);
 
-        if (!contains(winner)) {
-            players.push(Player(winner, 1));
-        }
+        updateWinner(winner);
 
         result = newResult;
         player1 = address(0);
