@@ -12,6 +12,12 @@ contract BookDataBase {
     uint32 private nextId = 0;
     mapping (uint32 => Book) public books;
 
+    function compare(string memory str1, string memory str2) private pure returns (bool) {
+        bytes memory arrA = bytes(str1);
+        bytes memory arrB = bytes(str2);
+        return arrA.length == arrB.length && keccak256(arrA) == keccak256(arrB);
+    }
+
     function addBook(Book memory newBook) public {
         nextId++;
         books[nextId] = newBook;
