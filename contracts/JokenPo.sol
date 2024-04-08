@@ -17,14 +17,20 @@ contract JokenPo {
 
     address payable private immutable owner;
 
+    address[] public players;
+
     constructor() {
         owner = payable(msg.sender);
     }
 
     function finishGame(string memory newResult, address winner) private {
         address contractAddress = address(this);
+
         payable(winner).transfer((contractAddress.balance / 100) * 90);
         owner.transfer(contractAddress.balance);
+
+        players.push(winner);
+
         result = newResult;
         player1 = address(0);
         choice1 = Options.NONE;
