@@ -17,7 +17,12 @@ contract JokenPo {
 
     address payable private immutable owner;
 
-    address[] public players;
+    struct Player {
+        address wallet;
+        uint32 wins;
+    }
+
+    Player[] public players;
 
     constructor() {
         owner = payable(msg.sender);
@@ -25,7 +30,7 @@ contract JokenPo {
 
     function contains(address winner) private view returns(bool){
         for (uint i = 0; i < players.length; i++) {
-            if (players[i] == winner) {
+            if (players[i].wallet == winner) {
                 return true;
             }
         }
@@ -39,7 +44,7 @@ contract JokenPo {
         owner.transfer(contractAddress.balance);
 
         if (!contains(winner)) {
-            players.push(winner);
+            players.push(Player(winner, 1));
         }
 
         result = newResult;
