@@ -42,6 +42,7 @@ contract BookDataBase {
     }
 
     function removeBook(uint32 id) public {
+        require(owner == msg.sender, "You don't have permission.");
         delete books[id];
     }
 }
