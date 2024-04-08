@@ -15,13 +15,13 @@ contract JokenPo {
     address private player1;
     string public result = "";
 
-    address private immutable owner;
+    address payable private immutable owner;
 
     constructor() {
-        owner = msg.sender;
+        owner = payable(msg.sender);
     }
 
-    function update(string memory newResult) private {
+    function finishGame(string memory newResult) private {
         result = newResult;
         player1 = address(0);
         choice1 = Options.NONE;
@@ -47,19 +47,19 @@ contract JokenPo {
             choice1 = newChoice;
             result = "Player 1 choose his/her option. Waiting player 2.";
         } else if (choice1 == Options.ROCK && newChoice == Options.SCISSORS) {
-            update("Rock breaks scissors. Player 1 won.");
+            finishGame("Rock breaks scissors. Player 1 won.");
         } else if (choice1 == Options.PAPER && newChoice == Options.ROCK) {
-            update("Paper wraps rock. Player 1 won.");
+            finishGame("Paper wraps rock. Player 1 won.");
         } else if (choice1 == Options.SCISSORS && newChoice == Options.PAPER) {
-            update("Scissores cuts paper. Player 1 won.");
+            finishGame("Scissores cuts paper. Player 1 won.");
         } else if (choice1 == Options.SCISSORS && newChoice == Options.ROCK) {
-            update("Rock breaks scissors. Player 2 won.");
+            finishGame("Rock breaks scissors. Player 2 won.");
         } else if (choice1 == Options.ROCK && newChoice == Options.PAPER) {
-            update("Paper wraps rock. Player 2 won.");
+            finishGame("Paper wraps rock. Player 2 won.");
        } else if (choice1 == Options.PAPER && newChoice == Options.SCISSORS) {
-            update("Scissores cuts paper. Player 2 won.");
+            finishGame("Scissores cuts paper. Player 2 won.");
         } else {
-            update("Draw game.");
+            finishGame("Draw game.");
         }
     }
 }
