@@ -34,4 +34,8 @@ contract BookDataBase {
             books[id].year = newBook.year;
         }
     }
+
+    function removeBook(uint32 id) public {
+        delete books[id];
+    }
 }
