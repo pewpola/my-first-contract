@@ -21,8 +21,9 @@ contract JokenPo {
         owner = payable(msg.sender);
     }
 
-    function finishGame(string memory newResult) private {
+    function finishGame(string memory newResult, address winner) private {
         address contractAddress = address(this);
+        payable(winner).transfer((contractAddress.balance / 100) * 90);
         owner.transfer((contractAddress.balance / 100) * 10);
         result = newResult;
         player1 = address(0);
@@ -49,19 +50,21 @@ contract JokenPo {
             choice1 = newChoice;
             result = "Player 1 choose his/her option. Waiting player 2.";
         } else if (choice1 == Options.ROCK && newChoice == Options.SCISSORS) {
-            finishGame("Rock breaks scissors. Player 1 won.");
+            finishGame("Rock breaks scissors. Player 1 won.", player1);
         } else if (choice1 == Options.PAPER && newChoice == Options.ROCK) {
-            finishGame("Paper wraps rock. Player 1 won.");
+            finishGame("Paper wraps rock. Player 1 won.", player1);
         } else if (choice1 == Options.SCISSORS && newChoice == Options.PAPER) {
-            finishGame("Scissores cuts paper. Player 1 won.");
+            finishGame("Scissores cuts paper. Player 1 won.", player1);
         } else if (choice1 == Options.SCISSORS && newChoice == Options.ROCK) {
-            finishGame("Rock breaks scissors. Player 2 won.");
+            finishGame("Rock breaks scissors. Player 2 won.", msg.sender);
         } else if (choice1 == Options.ROCK && newChoice == Options.PAPER) {
-            finishGame("Paper wraps rock. Player 2 won.");
+            finishGame("Paper wraps rock. Player 2 won.", msg.sender);
        } else if (choice1 == Options.PAPER && newChoice == Options.SCISSORS) {
-            finishGame("Scissores cuts paper. Player 2 won.");
+            finishGame("Scissores cuts paper. Player 2 won.", msg.sender);
         } else {
-            finishGame("Draw game.");
+            result = "Draw game. The prize was doubled";
+            player1 = address(0);
+            choice1 = Options.NONE;
         }
     }
 }
