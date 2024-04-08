@@ -21,5 +21,17 @@ contract BookDataBase {
     function addBook(Book memory newBook) public {
         nextId++;
         books[nextId] = newBook;
-    } 
+    }
+
+    function editBook(uint32 id, Book memory newBook) public {
+        Book memory oldBook = books[id];
+
+        if (!compare(oldBook.title, newBook.title) && !compare(newBook.title,"")) {
+            books[id].title = newBook.title;
+        }
+
+        if (oldBook.year != newBook.year && newBook.year > 0) {
+            books[id].year = newBook.year;
+        }
+    }
 }
