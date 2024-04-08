@@ -96,7 +96,7 @@ contract JokenPo {
         Player[] memory arr = new Player[](players.length);
 
         for (uint i = 0; i < players.length; i++) {
-            arr[i] = players[i];    
+            arr[i] = players[i];
         }
 
         for (uint i = 0; i < arr.length - 1; i++) {
